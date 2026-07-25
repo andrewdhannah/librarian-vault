@@ -1,0 +1,199 @@
+{
+  "description": "Valid identity for librarian-vault-extension",
+  "category": "valid",
+  "expected": {
+    "pass": true
+  },
+  "data": {
+    "identity": {
+      "extension_id": "librarian-vault-extension",
+      "contract_id": "librarian-vault-extension-contract-v1",
+      "contract_version": "1.0.0",
+      "version": "0.1.0",
+      "owner_domain": "knowledge.vault",
+      "declared_at": "2026-07-25T02:49:43Z"
+    },
+    "contract": {
+      "contract_id": "librarian-vault-extension-contract-v1",
+      "contract_type": "connector_custody",
+      "version": "1.0.0",
+      "parties": [
+        {
+          "role": "extension",
+          "id": "librarian-vault-extension"
+        },
+        {
+          "role": "core",
+          "id": "librarian"
+        }
+      ],
+      "capabilities": {
+        "declarations": [
+          {
+            "capability_id": "vault.ingest",
+            "allowed_operations": [
+              "vault_ingest"
+            ]
+          },
+          {
+            "capability_id": "vault.search",
+            "allowed_operations": [
+              "vault_search"
+            ]
+          },
+          {
+            "capability_id": "vault.verify",
+            "allowed_operations": [
+              "vault_verify"
+            ]
+          },
+          {
+            "capability_id": "vault.retrieve",
+            "allowed_operations": [
+              "vault_retrieve"
+            ]
+          },
+          {
+            "capability_id": "vault.status",
+            "allowed_operations": [
+              "vault_status"
+            ]
+          }
+        ]
+      },
+      "ownership": {
+        "extension_owns": {
+          "domains": [
+            "knowledge.vault"
+          ]
+        },
+        "core_owns": {
+          "domains": [
+            "authority"
+          ]
+        }
+      },
+      "forbidden_operations": {
+        "absolute": [
+          {
+            "operation": "modify_librarian_authority_state",
+            "violation_outcome": "REVOKE"
+          }
+        ]
+      },
+      "lifecycle": {
+        "state_machine": [
+          {
+            "state": "REGISTERED"
+          },
+          {
+            "state": "ACTIVE"
+          },
+          {
+            "state": "REVOKED"
+          }
+        ]
+      },
+      "evidence": {
+        "receipt_types": [
+          {
+            "type": "operation_receipt"
+          }
+        ]
+      }
+    },
+    "capabilities": [
+      {
+        "id": "vault.ingest",
+        "tools": [
+          "vault_ingest"
+        ],
+        "risk": "R1",
+        "status": "pending",
+        "permissions": [
+          "write:knowledge"
+        ]
+      },
+      {
+        "id": "vault.search",
+        "tools": [
+          "vault_search"
+        ],
+        "risk": "R0",
+        "status": "pending",
+        "permissions": [
+          "read:knowledge"
+        ]
+      },
+      {
+        "id": "vault.verify",
+        "tools": [
+          "vault_verify"
+        ],
+        "risk": "R0",
+        "status": "pending",
+        "permissions": [
+          "read:knowledge"
+        ]
+      },
+      {
+        "id": "vault.retrieve",
+        "tools": [
+          "vault_retrieve"
+        ],
+        "risk": "R0",
+        "status": "pending",
+        "permissions": [
+          "read:knowledge"
+        ]
+      },
+      {
+        "id": "vault.status",
+        "tools": [
+          "vault_status"
+        ],
+        "risk": "R0",
+        "status": "pending",
+        "permissions": [
+          "read:knowledge"
+        ]
+      }
+    ],
+    "lifecycle": {
+      "state_machine": [
+        {
+          "state": "REGISTERED"
+        },
+        {
+          "state": "ACTIVE"
+        },
+        {
+          "state": "REVOKED"
+        }
+      ]
+    },
+    "permissions": {
+      "allowed_operations": {
+        "write:knowledge": {
+          "tools": [
+            "vault_ingest"
+          ],
+          "risk": "R1"
+        },
+        "read:knowledge": {
+          "tools": [
+            "vault_status"
+          ],
+          "risk": "R0"
+        }
+      },
+      "forbidden_operations": [
+        "modify_librarian_authority_state"
+      ],
+      "enforcement": {
+        "drift_monitoring": "active",
+        "violation_outcomes": {}
+      }
+    }
+  }
+}

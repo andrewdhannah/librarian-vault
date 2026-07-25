@@ -1,0 +1,107 @@
+{
+  "manifest_version": "1.0.0",
+  "extension_id": "librarian-vault-extension",
+  "declared_at": "2026-07-25T02:49:43Z",
+  "identity": {
+    "extension_id": "librarian-vault-extension",
+    "display_name": "Librarian Vault",
+    "version": "0.1.0",
+    "classification": "knowledge_custody_provider",
+    "domain": "knowledge.vault",
+    "contract_id": "librarian-vault-extension-contract-v1",
+    "contract_version": "1.0.0",
+    "declared_at": "2026-07-25T02:49:43Z"
+  },
+  "capabilities": [
+    {
+      "id": "vault.ingest",
+      "display_name": "Vault Ingest",
+      "tools": [
+        "vault_ingest"
+      ],
+      "risk": "R1",
+      "description": "Vault Ingest capability",
+      "permissions": [
+        "write:knowledge"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "vault.search",
+      "display_name": "Vault Search",
+      "tools": [
+        "vault_search"
+      ],
+      "risk": "R0",
+      "description": "Vault Search capability",
+      "permissions": [
+        "read:knowledge"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "vault.verify",
+      "display_name": "Vault Verify",
+      "tools": [
+        "vault_verify"
+      ],
+      "risk": "R0",
+      "description": "Vault Verify capability",
+      "permissions": [
+        "read:knowledge"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "vault.retrieve",
+      "display_name": "Vault Retrieve",
+      "tools": [
+        "vault_retrieve"
+      ],
+      "risk": "R0",
+      "description": "Vault Retrieve capability",
+      "permissions": [
+        "read:knowledge"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "vault.status",
+      "display_name": "Vault Status",
+      "tools": [
+        "vault_status"
+      ],
+      "risk": "R0",
+      "description": "Vault Status capability",
+      "permissions": [
+        "read:knowledge"
+      ],
+      "status": "pending"
+    }
+  ],
+  "forbidden_actions": [
+    {
+      "action": "modify_librarian_authority_state",
+      "violation_outcome": "REVOKE"
+    },
+    {
+      "action": "create_owner_decisions",
+      "violation_outcome": "REVOKE"
+    },
+    {
+      "action": "mutate_sprint_ledger",
+      "violation_outcome": "REVOKE"
+    },
+    {
+      "action": "delete_knowledge.vault_artifacts",
+      "violation_outcome": "SUSPENDED"
+    }
+  ],
+  "receipt_types": [
+    {
+      "type": "operation_receipt",
+      "description": "Generated per operation"
+    }
+  ],
+  "dependencies": []
+}

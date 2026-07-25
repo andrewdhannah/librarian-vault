@@ -1,0 +1,37 @@
+{
+  "permissions_version": "1.0.0",
+  "extension_id": "librarian-vault-extension",
+  "contract_id": "librarian-vault-extension-contract-v1",
+  "allowed_operations": {
+    "write:knowledge": {
+      "tools": [
+        "vault_ingest"
+      ],
+      "risk": "R1",
+      "requires_approval": false,
+      "produces_receipt": true
+    },
+    "read:knowledge": {
+      "tools": [
+        "vault_status"
+      ],
+      "risk": "R0",
+      "requires_approval": false,
+      "produces_receipt": true
+    }
+  },
+  "forbidden_operations": [
+    "modify_librarian_authority_state",
+    "create_owner_decisions",
+    "mutate_sprint_ledger",
+    "delete_knowledge.vault_artifacts"
+  ],
+  "enforcement": {
+    "drift_monitoring": "active",
+    "review_frequency": "per_operation",
+    "violation_outcomes": {
+      "drift": "SUSPENDED",
+      "contract_breach": "REVOKED"
+    }
+  }
+}

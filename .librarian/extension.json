@@ -1,0 +1,20 @@
+{
+  "$schema": "project-index-v1",
+  "project_id": "librarian-vault-extension",
+  "display_name": "Librarian Vault",
+  "repo_path": "C:\\Users\\andre\\Desktop\\ElyseWorkDocs\\librarian-vault-extension",
+  "default_branch": "main",
+  "current_phase": "init",
+  "allowed_startup_modes": [
+    "managed",
+    "degraded",
+    "read-only"
+  ],
+  "tags": [
+    "extension",
+    "governed",
+    "knowledge.vault"
+  ],
+  "deprecated": false,
+  "lifecycle_policy_version": "1.1"
+}
