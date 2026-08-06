@@ -1,0 +1,60 @@
+{
+  "created_at" : "2026-07-27T18:14:32Z",
+  "created_by" : "Andrew Hannah",
+  "display_name" : "Librarian Vault",
+  "files_created" : [
+    "FEATURE-STATUS.md",
+    "SESSION-HANDOFF.md",
+    "project-state\/sprint-ledger.json",
+    "receipts\/ (directory)",
+    "receipts\/registry\/ (directory)",
+    "receipts\/decision-resolutions\/ (directory)"
+  ],
+  "files_modified" : [
+
+  ],
+  "known_limitations" : [
+    "Registry index is file-based (project-index.json). Future sprint will migrate to service-managed storage.",
+    "No MCP tools for registry queries yet. See PROJECT-REGISTRY-MCP-TOOLS-1.",
+    "No receipt backfill for existing projects. See PROJECT-REGISTRY-RECEIPTS-1.",
+    "Git repository is not created. The Owner must initialize git separately."
+  ],
+  "profile_fields" : [
+    "projectId",
+    "displayName",
+    "aliases",
+    "repoPath",
+    "profilePath",
+    "startupFiles",
+    "governanceFiles",
+    "statusFiles",
+    "ledgerFiles",
+    "receiptPaths",
+    "validationSurfaces",
+    "defaultBranch",
+    "currentPhase",
+    "allowedStartupModes",
+    "tags",
+    "deprecated"
+  ],
+  "project_id" : "librarian-vault",
+  "receipt_id" : "pcr-librarian-vault-20260727-001",
+  "registry_changes" : [
+
+  ],
+  "registry_version" : 6,
+  "repo_path" : "\/Users\/andrew\/Desktop\/CarbideFrame\/active\/librarian-vault",
+  "rollback_instructions" : [
+    "Delete: FEATURE-STATUS.md",
+    "Delete: SESSION-HANDOFF.md",
+    "Delete: project-state\/sprint-ledger.json",
+    "Delete directory: receipts",
+    "Delete directory: receipts\/registry",
+    "Delete directory: receipts\/decision-resolutions"
+  ],
+  "startup_available" : true,
+  "transaction_scope" : "Project creation: profile, registry entry, state init, receipt",
+  "validation_results" : [
+    "All validations passed"
+  ]
+}

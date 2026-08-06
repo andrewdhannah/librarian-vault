@@ -4,11 +4,20 @@ Librarian Vault — MCP Server
 JSON-RPC 2.0 over HTTP following the Librarian extension model.
 This server starts in REGISTERED state. Capabilities require
 handshake completion and owner approval to activate.
+
+KVAI-002: Wired to tools/vault.py — actual domain logic executes here.
 """
 
 import json
+import sys
+import os
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from datetime import datetime, timezone
+
+# Add project root to path for imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+from src.tools.vault import call_tool, TOOLS
 
 EXTENSION_ID = "librarian-vault-extension"
 VERSION = "0.1.0"
@@ -46,64 +55,82 @@ class MCPHandler(BaseHTTPRequestHandler):
             self._send_json({"jsonrpc": "2.0", "id": req_id, "error": {"code": -32601, "message": f"Method not found: {method}"}})
 
     def _get_tools(self):
-        """Return declared tools. Updated when capabilities are activated."""
+        """Return declared tools — must match TOOLS router in tools/vault.py."""
         return [
             {
                 "name": "vault_ingest",
-                "description": "Vault Ingest capability",
+                "description": "Feed an IngestionResult into the vault. Accepts ingestion_result, source_extension, receipt_id.",
                 "inputSchema": {
                     "type": "object",
                     "properties": {
-                        "input": {"type": "string", "description": "Input for vault.ingest"}
-                    }
+                        "ingestion_result": {"type": "object", "description": "IngestionResult dict from source extension"},
+                        "source_extension": {"type": "string", "description": "ID of the source extension"},
+                        "receipt_id": {"type": "string", "description": "Optional receipt ID from validation"}
+                    },
+                    "required": ["ingestion_result"]
                 }
             },
             {
                 "name": "vault_search",
-                "description": "Vault Search capability",
+                "description": "Search indexed knowledge. Returns results with provenance.",
                 "inputSchema": {
                     "type": "object",
                     "properties": {
-                        "input": {"type": "string", "description": "Input for vault.search"}
-                    }
-                }
-            },
-            {
-                "name": "vault_verify",
-                "description": "Vault Verify capability",
-                "inputSchema": {
-                    "type": "object",
-                    "properties": {
-                        "input": {"type": "string", "description": "Input for vault.verify"}
-                    }
+                        "query": {"type": "string", "description": "Search query string"},
+                        "limit": {"type": "integer", "description": "Maximum results (default: 10)"},
+                        "min_score": {"type": "number", "description": "Minimum relevance score (default: 0.1)"}
+                    },
+                    "required": ["query"]
                 }
             },
             {
                 "name": "vault_retrieve",
-                "description": "Vault Retrieve capability",
+                "description": "Retrieve context for a query with full provenance and citations.",
                 "inputSchema": {
                     "type": "object",
                     "properties": {
-                        "input": {"type": "string", "description": "Input for vault.retrieve"}
+                        "query": {"type": "string", "description": "User query"},
+                        "max_chunks": {"type": "integer", "description": "Maximum chunks to retrieve (default: 5)"},
+                        "min_score": {"type": "number", "description": "Minimum relevance score (default: 0.1)"},
+                        "include_citations": {"type": "boolean", "description": "Include citation details (default: true)"}
+                    },
+                    "required": ["query"]
+                }
+            },
+            {
+                "name": "vault_verify",
+                "description": "Verify provenance of a chunk or artifact. Checks source extension, receipt, content hash, evidence path.",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "chunk_id": {"type": "string", "description": "Verify a specific chunk"},
+                        "artifact_id": {"type": "string", "description": "Verify all chunks in an artifact"}
                     }
                 }
             },
             {
                 "name": "vault_status",
-                "description": "Vault Status capability",
+                "description": "Get vault statistics: artifact count, chunk count, embedding count, verification status.",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {}
+                }
+            },
+            {
+                "name": "vault_artifacts",
+                "description": "List indexed artifacts with metadata.",
                 "inputSchema": {
                     "type": "object",
                     "properties": {
-                        "input": {"type": "string", "description": "Input for vault.status"}
+                        "limit": {"type": "integer", "description": "Maximum artifacts to return (default: 50)"}
                     }
                 }
             },
         ]
 
     def _handle_tool(self, tool_name, arguments):
-        """Execute a tool. This is where your domain logic goes."""
-        # TODO: Implement librarian-vault-extension domain logic
-        return {"content": [{"type": "text", "text": f"Tool '{tool_name}' called. Not yet implemented."}]}
+        """Execute a tool via tools/vault.py:call_tool()."""
+        return call_tool(tool_name, arguments)
 
     def _send_json(self, data):
         body = json.dumps(data).encode()
@@ -125,6 +152,7 @@ def start_server():
     print(f"  Version:   {VERSION}")
     print(f"  State:     REGISTERED (handshake required)")
     print(f"  Endpoint:  http://127.0.0.1:{MCP_PORT}/mcp")
+    print(f"  Tools:     {len(TOOLS)} ({', '.join(TOOLS.keys())})")
     print()
     server.serve_forever()
 

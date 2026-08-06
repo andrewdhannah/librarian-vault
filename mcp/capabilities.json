@@ -14,68 +14,57 @@
   },
   "capabilities": [
     {
-      "id": "vault.ingest",
+      "id": "vault_ingest",
       "display_name": "Vault Ingest",
-      "tools": [
-        "vault_ingest"
-      ],
+      "tools": ["vault_ingest"],
       "risk": "R1",
-      "description": "Vault Ingest capability",
-      "permissions": [
-        "write:knowledge"
-      ],
+      "description": "Feed an IngestionResult into the vault. Accepts ingestion_result, source_extension, receipt_id.",
+      "permissions": ["write:knowledge"],
       "status": "pending"
     },
     {
-      "id": "vault.search",
+      "id": "vault_search",
       "display_name": "Vault Search",
-      "tools": [
-        "vault_search"
-      ],
+      "tools": ["vault_search"],
       "risk": "R0",
-      "description": "Vault Search capability",
-      "permissions": [
-        "read:knowledge"
-      ],
+      "description": "Search indexed knowledge. Returns results with provenance.",
+      "permissions": ["read:knowledge"],
       "status": "pending"
     },
     {
-      "id": "vault.verify",
-      "display_name": "Vault Verify",
-      "tools": [
-        "vault_verify"
-      ],
-      "risk": "R0",
-      "description": "Vault Verify capability",
-      "permissions": [
-        "read:knowledge"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "vault.retrieve",
+      "id": "vault_retrieve",
       "display_name": "Vault Retrieve",
-      "tools": [
-        "vault_retrieve"
-      ],
+      "tools": ["vault_retrieve"],
       "risk": "R0",
-      "description": "Vault Retrieve capability",
-      "permissions": [
-        "read:knowledge"
-      ],
+      "description": "Retrieve context for a query with full provenance and citations.",
+      "permissions": ["read:knowledge"],
       "status": "pending"
     },
     {
-      "id": "vault.status",
-      "display_name": "Vault Status",
-      "tools": [
-        "vault_status"
-      ],
+      "id": "vault_verify",
+      "display_name": "Vault Verify",
+      "tools": ["vault_verify"],
       "risk": "R0",
-      "description": "Vault Status capability",
-      "permissions": [
-        "read:knowledge"
-      ],
+      "description": "Verify provenance of a chunk or artifact. Checks source extension, receipt, content hash, evidence path.",
+      "permissions": ["read:knowledge"],
+      "status": "pending"
+    },
+    {
+      "id": "vault_status",
+      "display_name": "Vault Status",
+      "tools": ["vault_status"],
+      "risk": "R0",
+      "description": "Get vault statistics: artifact count, chunk count, embedding count, verification status.",
+      "permissions": ["read:knowledge"],
+      "status": "pending"
+    },
+    {
+      "id": "vault_artifacts",
+      "display_name": "Vault Artifacts",
+      "tools": ["vault_artifacts"],
+      "risk": "R0",
+      "description": "List indexed artifacts with metadata.",
+      "permissions": ["read:knowledge"],
       "status": "pending"
     }
   ],
